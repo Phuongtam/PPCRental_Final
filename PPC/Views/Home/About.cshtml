@@ -1,0 +1,21 @@
+﻿@using PPC.Models;
+@model IEnumerable<PPC.Models.INTRODUCTION>
+@{
+    ViewBag.Title = "About";
+}
+
+<div class="item">
+
+    <img src="~/Images/PIS_6656-Edit-stamp.jpg" />
+    <div class="carousel-caption">
+        <div class="jumbotron">
+            <h2>WELCOME</h2>
+                @foreach (var item in Model)
+              {
+            <p class="text-left">@item.Content</p>
+            <p class="text-right>@item.create_date</p>
+            <p class="text-right>@item.create_user</p>
+              }
+        </div>
+    </div>
+</div>

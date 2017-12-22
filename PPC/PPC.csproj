@@ -274,23 +274,33 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Admincss\arrive.min.js" />
+    <Content Include="Content\Admincss\bootstrap-notify.js" />
+    <Content Include="Content\Admincss\bootstrap.min.css" />
+    <Content Include="Content\Admincss\bootstrap.min.js" />
+    <Content Include="Content\Admincss\chartist.min.js" />
+    <Content Include="Content\Admincss\demo.css" />
+    <Content Include="Content\Admincss\demo.js" />
+    <Content Include="Content\Admincss\jquery-3.2.1.min.js" />
+    <Content Include="Content\Admincss\material-dashboard.css" />
+    <Content Include="Content\Admincss\material-dashboard.js" />
+    <Content Include="Content\Admincss\material.min.js" />
+    <Content Include="Content\Admincss\perfect-scrollbar.jquery.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.bundle.min.js" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\bootstrap1.css" />
+    <Content Include="Content\bootstrap1.min.css" />
     <Content Include="Content\css\css-seach.css" />
-    <Content Include="Content\dataTables.bootstrap4.css" />
-    <Content Include="Content\dataTables.bootstrap4.js" />
+    <Content Include="Content\css\style.css" />
     <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\jquery.dataTables.js" />
-    <Content Include="Content\jquery.easing.min.js" />
-    <Content Include="Content\jquery.min.js" />
-    <Content Include="Content\sb-admin-datatables.min.js" />
-    <Content Include="Content\sb-admin.css" />
-    <Content Include="Content\sb-admin.min.js" />
+    <Content Include="Content\metisMenu.min.css" />
+    <Content Include="Content\metisMenu.min.js" />
+    <Content Include="Content\morris.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\startmin.css" />
+    <Content Include="Content\startmin.js" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\timeline.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -337,12 +347,6 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
-    <Content Include="Areas\Admin\Views\ProjectAdmin\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\ProjectAdmin\Edit.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -372,10 +376,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
@@ -1395,8 +1399,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -1417,20 +1419,26 @@
     <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Property\Detail.cshtml" />
-    <Content Include="Views\Shared\_AgencyLayout.cshtml" />
-    <Content Include="Views\AgencyProperty\ListProperty.cshtml" />
-    <Content Include="Views\AgencyProperty\CreateNewProperty.cshtml" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_AgencyLayout.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\AgencyProperty\CreateNewProperty.cshtml" />
+    <Content Include="Views\AgencyProperty\Delete.cshtml" />
+    <Content Include="Views\AgencyProperty\DeleteConfirmed.cshtml" />
+    <Content Include="Views\AgencyProperty\Edit.cshtml" />
+    <Content Include="Views\AgencyProperty\ViewDraftProject.cshtml" />
+    <Content Include="Views\AgencyProperty\ViewListMyProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

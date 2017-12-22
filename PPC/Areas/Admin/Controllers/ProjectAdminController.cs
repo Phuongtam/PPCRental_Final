@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PPC.Models;
@@ -14,8 +17,128 @@ namespace PPC.Areas.Admin.Controllers
         // GET: Admin/ProjectAdmin
         public ActionResult Index()
         {
-            var project = db.PROPERTY.OrderByDescending(x => x.ID).ToList();
-            return View(project);
+            if (Session["UserID"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
+        }
+
+        public ActionResult ViewListofAgencyProject()
+        {
+            if (Session["UserID"] != null)
+            {
+                var id = Session["UserID"];
+                var user = db.USER.Find(id);
+                var userid = user.ID;
+                var product = db.PROPERTY.Where(d => d.UserID == userid).ToList();
+                return View(product);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
+
+        }
+        public ActionResult ViewListofProject()
+        {
+            if (Session["UserID"] != null)
+            {
+                var product = db.PROPERTY.ToList();
+                return View(product);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
+
+        }
+        //get viewlistprojectupapproved
+        public ActionResult ViewListProjectUnapproved()
+        {
+            if (Session["UserID"] != null)
+            {
+                var id = Session["Status_ID"];
+                var project = db.PROJECT_STATUS.Find(id=1);
+                var project2 = db.PROJECT_STATUS.Find(id = 4);
+                var projectid = project.ID;
+                var projectid2 = project2.ID;
+                var product = db.PROPERTY.Where(d => d.Status_ID == projectid || d.Status_ID == projectid2).ToList();
+                return View(product);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
+
+        }
+
+        [HttpGet]
+        public ActionResult EditStatus(int? id)
+        {
+            ViewBag.PropertyType_ID = new SelectList(db.PROPERTY_TYPE, "ID", "CodeType");
+            ViewBag.Ward_ID = new SelectList(db.WARD.Where(y => y.ID >= 31 && y.ID <= 54), "ID", "WardName");
+            ViewBag.District_ID = new SelectList(db.DISTRICT.Where(y => y.ID >= 31 && y.ID <= 54), "ID", "DistrictName");
+            ViewBag.Street_ID = new SelectList(db.STREET.Where(y => y.ID >= 31 && y.ID <= 54), "ID", "StreetName");
+            ViewBag.Status_ID = db.PROJECT_STATUS.OrderByDescending(x => x.ID).ToList();
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            PROPERTY pro = db.PROPERTY.Find(id);
+            if (pro == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(pro);
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult EditStatus(PROPERTY p)
+        {
+
+            PROPERTY project = new PROPERTY();
+            string s;
+            string b;
+            AvatarU(p, out project, out s);
+            ImagesU(p, out project, out b);
+
+            if (ModelState.IsValid)
+            {
+
+                project.Status_ID = p.Status_ID;
+                project.Note = p.Note;
+
+                project.PropertyName = p.PropertyName;
+                project.Avatar = s;
+                project.Images = b;
+                project.PropertyType_ID = p.PropertyType_ID;
+                project.Content = p.Content;
+                project.Street_ID = p.Street_ID;
+                project.Ward_ID = p.Ward_ID;
+                project.District_ID = p.District_ID;
+                project.Price = p.Price;
+                project.UnitPrice = "VND";
+                project.Area = p.Area;
+                project.BedRoom = p.BedRoom;
+                project.BathRoom = p.BathRoom;
+                project.PackingPlace = p.PackingPlace;
+                db.Entry(project).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ViewListofProject", "ProjectAdmin");
+            }
+            ViewBag.PropertyType_ID = new SelectList(db.PROPERTY_TYPE, "ID", "CodeType");
+            ViewBag.Ward_ID = new SelectList(db.WARD.Where(y => y.ID >= 31 && y.ID <= 54), "ID", "WardName");
+            ViewBag.District_ID = new SelectList(db.DISTRICT.Where(y => y.ID >= 31 && y.ID <= 54), "ID", "DistrictName");
+            ViewBag.Street_ID = new SelectList(db.STREET.Where(y => y.ID >= 31 && y.ID <= 54), "ID", "StreetName");
+            ViewBag.Status_ID = db.PROJECT_STATUS.OrderByDescending(x => x.ID).ToList();
+            return View(p);
+
         }
 
         [HttpGet]
@@ -61,12 +184,13 @@ namespace PPC.Areas.Admin.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Index");
-            
+
         }
 
-        private void AvatarU(PROPERTY p, out PROPERTY en, out string s)
+
+        private void AvatarU(PROPERTY p, out PROPERTY product, out string s)
         {
-            en = db.PROPERTY.Find(p.ID);
+            product = db.PROPERTY.Find(p.ID);
             string filename;
             string extension;
 
@@ -84,8 +208,7 @@ namespace PPC.Areas.Admin.Controllers
             }
             else
             {
-                s = en.Avatar;
-
+                s = product.Avatar;
             }
         }
         private void ImagesU(PROPERTY p, out PROPERTY en, out string s)
@@ -95,19 +218,51 @@ namespace PPC.Areas.Admin.Controllers
             string extension;
             string b;
             s = "";
-
             if (p.UpImages == null)
             {
                 s = en.Images;
-
             }
-
             else
             {
-
                 foreach (var file in p.UpImages)
                 {
-                    if (file.ContentLength > 0)
+                    try
+                    {
+                        if (file.ContentLength >= 0)
+                        {
+                            filename = Path.GetFileNameWithoutExtension(file.FileName);
+                            extension = Path.GetExtension(file.FileName);
+                            filename = filename + DateTime.Now.ToString("yymmssff") + extension;
+                            p.Images = filename;
+                            b = p.Images;
+                            s = string.Concat(s, b, ",");
+                            filename = Path.Combine(Server.MapPath("~/Images"), filename);
+                            file.SaveAs(filename);
+                        }
+                        else
+                        {
+                            s = en.Images;
+                        }
+                    }
+                    catch (ArgumentNullException)
+                    {
+
+                    }
+                }
+            }
+        }
+
+        private string ImagesUPost(PROPERTY p)
+        {
+            string filename;
+            string extension;
+            string b;
+            string s = "";
+            foreach (var file in p.UpImages)
+            {
+                if (file != null)
+                {
+                    if (file.ContentLength >= 0)
                     {
                         filename = Path.GetFileNameWithoutExtension(file.FileName);
                         extension = Path.GetExtension(file.FileName);
@@ -118,19 +273,180 @@ namespace PPC.Areas.Admin.Controllers
                         filename = Path.Combine(Server.MapPath("~/Images"), filename);
                         file.SaveAs(filename);
                     }
-                    else
-                    {
-                        s = en.Images;
-                    }
-
                 }
+            }
+            return s;
+        }
+        private string AvatarUPost(PROPERTY p)
+        {
+            string s = "";
+            string filename;
+            string extension;
 
 
+            if (p.AvatarUpload != null)
+            {
+                filename = Path.GetFileNameWithoutExtension(p.AvatarUpload.FileName);
+                extension = Path.GetExtension(p.AvatarUpload.FileName);
+                filename = filename + DateTime.Now.ToString("yymmssff") + extension;
+                p.Avatar = filename;
+                s = p.Avatar;
+                filename = Path.Combine(Server.MapPath("~/Images"), filename);
+                p.AvatarUpload.SaveAs(filename);
+                return s;
 
             }
+            return s;
+
+        }
+
+        public ActionResult Create()
+        {
+            if (Session["UserID"] != null)
+            {
+                ViewBag.District_ID = new SelectList(db.DISTRICT.Where(y => y.ID >= 31 && y.ID <= 54), "ID", "DistrictName");
+                ViewBag.Status_ID = new SelectList(db.PROJECT_STATUS, "ID", "Status_Name");
+                ViewBag.PropertyType_ID = new SelectList(db.PROPERTY_TYPE, "ID", "CodeType");
+                ViewBag.Street_ID = new SelectList(db.STREET.Where(y => y.ID >= 31 && y.ID <= 54), "ID", "StreetName");
+                ViewBag.UserID = new SelectList(db.USER, "ID", "Email");
+                ViewBag.Sale_ID = new SelectList(db.USER, "ID", "Email");
+                ViewBag.Ward_ID = new SelectList(db.WARD.Where(y => y.ID >= 31 && y.ID <= 54), "ID", "WardName");
+                ViewBag.Feature_ID = new SelectList(db.FEATURE, "ID", "FeatureName");
+
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
+
+        }
+
+        // POST: /Project/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateInput(false)]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(PROPERTY property)
+        {
+            if (Session["UserID"] != null)
+            {
+
+                property.Avatar = AvatarUPost(property);
+                property.Images = ImagesUPost(property);
+                property.Created_at = DateTime.Now;
+                property.Create_post = DateTime.Now;
+                property.UnitPrice = "VND";
+                // 1 chưa duyệt, 2 lưu nháp, 3 đã duyệt, 4 hết hạn
+                property.Status_ID = 3;
+                property.UserID = int.Parse(Session["UserID"].ToString());
+
+                if (ModelState.IsValid)
+                {
+
+                    db.PROPERTY.Add(property);
+                    db.SaveChanges();
+                    return RedirectToAction("ViewListofAgencyProject", "ProjectAdmin");
+                }
+
+                ViewBag.District_ID = new SelectList(db.DISTRICT, "ID", "DistrictName", property.District_ID);
+                ViewBag.Status_ID = new SelectList(db.PROJECT_STATUS, "ID", "Status_Name", property.Status_ID);
+                ViewBag.PropertyType_ID = new SelectList(db.PROPERTY_TYPE, "ID", "CodeType", property.PropertyType_ID);
+                ViewBag.Street_ID = new SelectList(db.STREET, "ID", "StreetName", property.Street_ID);
+                ViewBag.UserID = new SelectList(db.USER, "ID", "Email", property.UserID);
+                ViewBag.Sale_ID = new SelectList(db.USER, "ID", "Email", property.Sale_ID);
+                ViewBag.Ward_ID = new SelectList(db.WARD, "ID", "WardName", property.Ward_ID);
+                return View(property);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult Draft(PROPERTY property)
+        {
+            if (Session["UserID"] != null)
+            {
+
+                property.Avatar = AvatarUPost(property);
+                property.Images = ImagesUPost(property);
+                property.Created_at = DateTime.Now;
+                property.Create_post = DateTime.Now;
+                property.UnitPrice = "VND";
+                property.Status_ID = 2;   // 1 chưa duyệt, 2 lưu nháp, 3 đã duyệt, 4 hết hạn
+                property.UserID = int.Parse(Session["UserID"].ToString());
+
+                if (ModelState.IsValid)
+                {
+                    db.PROPERTY.Add(property);
+                    db.SaveChanges();
+                    return RedirectToAction("ViewListofAgencyProject", "ProjectAdmin");
+                }
+
+                ViewBag.District_ID = new SelectList(db.DISTRICT, "ID", "DistrictName", property.District_ID);
+                ViewBag.Status_ID = new SelectList(db.PROJECT_STATUS, "ID", "Status_Name", property.Status_ID);
+                ViewBag.PropertyType_ID = new SelectList(db.PROPERTY_TYPE, "ID", "CodeType", property.PropertyType_ID);
+                ViewBag.Street_ID = new SelectList(db.STREET, "ID", "StreetName", property.Street_ID);
+                ViewBag.UserID = new SelectList(db.USER, "ID", "Email", property.UserID);
+                ViewBag.Sale_ID = new SelectList(db.USER, "ID", "Email", property.Sale_ID);
+                ViewBag.Ward_ID = new SelectList(db.WARD, "ID", "WardName", property.Ward_ID);
+                return View(property);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
+        }
+
+
+        public JsonResult GetStreet(int did)
+        {
+            var db = new DemoPPCRentalEntities();
+            var ward = db.STREET.Where(s => s.District_ID == did);
+            return Json(ward.Select(s => new
+            {
+                id = s.ID,
+                text = s.StreetName
+            }), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetWard(int did)
+        {
+            var db = new DemoPPCRentalEntities();
+            var ward = db.WARD.Where(s => s.District_ID == did);
+            return Json(ward.Select(s => new
+            {
+                id = s.ID,
+                text = s.WardName
+            }), JsonRequestBehavior.AllowGet);
 
 
         }
 
+        public ActionResult Delete(int? id)
+        {
+
+            PROPERTY property = db.PROPERTY.Find(id);
+            if (property == null)
+            {
+                return HttpNotFound();
+            }
+            return View(property);
+        }
+
+        // POST: /Project/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            PROPERTY property = db.PROPERTY.Find(id);
+            db.PROPERTY.Remove(property);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
-}
+
+    }

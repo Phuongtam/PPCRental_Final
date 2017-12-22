@@ -52,7 +52,5 @@ namespace PPC.Models
         public virtual USER USER { get; set; }
         public virtual USER USER1 { get; set; }
         public virtual WARD WARD { get; set; }
-    
-
     }
 }

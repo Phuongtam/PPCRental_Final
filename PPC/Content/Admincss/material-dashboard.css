@@ -1200,7 +1200,7 @@ fieldset[disabled] .navbar .navbar-nav>li>a.btn.btn-default.active {
 .open>.navbar .navbar-nav>li>a.btn.btn-primary.dropdown-toggle,
 .open>.navbar .navbar-nav>li>a.btn.btn-primary.dropdown-toggle:focus,
 .open>.navbar .navbar-nav>li>a.btn.btn-primary.dropdown-toggle:hover {
-    background-color: #9c27b0;
+    background-color: #00bcd4;
     color: #FFFFFF;
 }
 
@@ -2971,9 +2971,9 @@ label {
 }
 
 label.control-label {
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.07143;
-    color: #AAAAAA;
+    color: #0a0505;
     font-weight: 400;
     margin: 16px 0 0 0;
 }
@@ -3019,9 +3019,9 @@ label.control-label {
 }
 
 .form-group label.control-label {
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.07143;
-    color: #AAAAAA;
+    color: #0a0505;
     font-weight: 400;
     margin: 16px 0 0 0;
 }

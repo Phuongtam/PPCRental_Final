@@ -380,6 +380,18 @@
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Areas\Admin\Views\ProjectAdmin\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectAdmin\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectAdmin\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectAdmin\EditStatus.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectAdmin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectAdmin\ViewListofAgencyProject.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectAdmin\ViewListofProject.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectAdmin\ViewListProjectUnapproved.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
@@ -1438,7 +1450,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

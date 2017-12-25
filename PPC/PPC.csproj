@@ -337,6 +337,7 @@
     <Content Include="Images\sunshine-benthanh-cityhome-10-stamp.jpg" />
     <Content Include="Images\tag.png" />
     <Content Include="Images\twitter.png" />
+    <Content Include="Images\welcome-home.jpg" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>

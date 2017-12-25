@@ -5,5 +5,6 @@
 
 @mytag
 Scenario: I want to see the list of agency project on the screen
-	Given I have enter the adminpage
+	Given I am in the homepage
+	When I login
 	Then the resul should show the list of project on the screen 'PIS Top Apartment,ICON 56 – Modern Style Apartment,PIS Serviced Apartment – Boho Style'

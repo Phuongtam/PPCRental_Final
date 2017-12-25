@@ -94,8 +94,10 @@ namespace PPC.AcceptanceTests.Features
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 8
- testRunner.Given("I have enter the adminpage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I am in the homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
+ testRunner.When("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 10
  testRunner.Then("the resul should show the list of project on the screen \'PIS Top Apartment,ICON 5" +
                     "6 – Modern Style Apartment,PIS Serviced Apartment – Boho Style\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

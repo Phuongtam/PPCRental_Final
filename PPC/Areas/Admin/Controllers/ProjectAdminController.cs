@@ -34,7 +34,7 @@ namespace PPC.Areas.Admin.Controllers
                 if(Session["UserRole"].ToString() == "1" || Session["UserRole"].ToString() == "0")
                 {
                     var r = db.USER.Where(x => x.Role != 0 && x.Role != 1);
-                    var p = db.PROPERTY.Where(x => x.Status_ID != 3 && (x.USER.Role != 0 && x.USER.Role != 1)).ToList();
+                    var p = db.PROPERTY.Where(x => x.Status_ID == 3 && (x.USER.Role != 0 && x.USER.Role != 1)).ToList();
                     return View(p);
                 }
                 return RedirectToAction("Login", "Account", new { area = "" });

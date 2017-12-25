@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.IO;
 using PPC.Models;
-using System.Web.Helpers;
 
 namespace PPC.Controllers
 {
@@ -68,47 +67,64 @@ namespace PPC.Controllers
         }
 
         // GET: /Account/Register
+        [AllowAnonymous]
         [HttpGet]
-        public ActionResult SignUp()
+        public ActionResult Register()
         {
             return View();
         }
 
+        //
+        // POST: /Account/Register
         [HttpPost]
-        public ActionResult SignUp(USER user)
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(RegisterViewModel model)
         {
-
             if (ModelState.IsValid)
             {
-                var isE = IsEmailExist(user.Email);
-                if (isE)
+                if (CheckEmail(model.Email))
                 {
-                    ModelState.AddModelError("ExistEmail", "Email đã tồn tại, vui long nhập lại.");
+                    ModelState.AddModelError("", "Email already is exists");
                 }
                 else
                 {
-                    user.Password = Crypto.Hash(user.Password);
-                    //user.ConfirmPassword = Crypto.Hash(user.ConfirmPassword);
-
+                    var user = new USER();
+                    user.FullName = model.FullName;
+                    user.Email = model.Email;
+                    user.Password = model.Password;
+                    //user.Phone = model.Phone;
+                    //user.Address = model.Address;
                     user.Role = 2;
                     user.Status = true;
-                    db.USER.Add(user);
-                    db.SaveChanges();
-
-                    return RedirectToAction("Index", "Home");
+                    var result = Insert(user);
+                    if(result > 0)
+                    {
+                        ViewBag.Success = "Register is successfull";
+                        model = new RegisterViewModel();
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Register is false");
+                    }
                 }
+            }
 
-            }
-            return View();
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
-        [NonAction]
-        public bool IsEmailExist(string email)
+
+        public bool CheckEmail(string email)
         {
-            using (DemoPPCRentalEntities da = new DemoPPCRentalEntities())
-            {
-                var v = da.USER.Where(a => a.Email == email).FirstOrDefault();
-                return v != null;
-            }
+            return db.USER.Count(x => x.Email == email) > 0;
+        }
+        public long Insert(USER entity)
+        {
+            db.USER.Add(entity);
+            db.SaveChanges();
+            return entity.ID;
+
+
         }
 
     }

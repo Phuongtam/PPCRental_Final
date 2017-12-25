@@ -151,3 +151,5 @@ E:\PPCGit\PPC.AcceptanceTests\obj\Debug\PPC.AcceptanceTests.csprojResolveAssembl
 E:\PPCGit\PPC.AcceptanceTests\obj\Debug\PPC.AcceptanceTests.csproj.CoreCompileInputs.cache
 E:\PPCGit\PPC.AcceptanceTests\obj\Debug\PPC.AcceptanceTests.dll
 E:\PPCGit\PPC.AcceptanceTests\obj\Debug\PPC.AcceptanceTests.pdb
+E:\PPCGit\PPC.AcceptanceTests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
+E:\PPCGit\PPC.AcceptanceTests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml

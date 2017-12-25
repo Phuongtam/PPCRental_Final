@@ -14,10 +14,10 @@ namespace PPC.AcceptanceTests.Drivers
 {
     public class ProjectDriver
     {
-        private readonly CatalogContext _context;
-        private ActionResult _result;
+        private readonly SearchResultState _context;
+        //private ActionResult _result;
 
-        public ProjectDriver(CatalogContext context)
+        public ProjectDriver(SearchResultState context)
         {
             _context = context;
         }
@@ -31,18 +31,19 @@ namespace PPC.AcceptanceTests.Drivers
                     var property = new PROPERTY
                     {
                         PropertyName = row["PropertyName"],
-                        PropertyType_ID = int.Parse(row["PropertyType_ID"]),
-                        Status_ID = int.Parse(row["Status_ID"]),
-                        District_ID = int.Parse(row["District_ID"]),
-                        Street_ID = int.Parse(row["Street_ID"]),
-                        Content = row["Content"]
-                        // PropertyType_ID = db.PROPERTY_TYPE.FirstOrDefault(d => d.ID = int.Parse((row["PropertyType"]).ID)),
+                        PropertyType_ID = db.PROPERTY_TYPE.ToList().FirstOrDefault(x => x.CodeType == row["PropertyType"]).ID,
+                        Status_ID = db.PROJECT_STATUS.ToList().FirstOrDefault(x => x.Status_Name == row["Status"]).ID,
+                        District_ID = db.DISTRICT.ToList().FirstOrDefault(x => x.DistrictName == row["District"]).ID,
+                        Street_ID = db.STREET.ToList().FirstOrDefault(x => x.StreetName == row["Street"]).ID,
+                        Content = row["Content"],
+                        UserID = db.USER.ToList().FirstOrDefault(x => x.FullName == row["Agency"]).ID,
+                        Sale_ID = db.USER.ToList().FirstOrDefault(x => x.FullName == row["Sale"]).ID,
 
                     };
 
-                    _context.ReferenceBooks.Add(
-                            givenProjects.Header.Contains("ID") ? row["ID"] : row["PropertyName"],
-                            property);
+                    //_context.ReferenceBooks.Add(
+                    //        givenProjects.Header.Contains("ID") ? row["ID"] : row["PropertyName"],
+                    //        property);
 
                     db.PROPERTY.Add(property);
                 }
@@ -50,13 +51,13 @@ namespace PPC.AcceptanceTests.Drivers
                 db.SaveChanges();
             }
         }
-       
 
-        //public void Navigate(string mail, string pass)
+
+        //public void Login(string email, string pass)
         //{
-        //    using (var controller = new HomeController())
+        //    using (var controller = new AccountController())
         //    {
-        //        _result.ActionResult = controller.Login(mail,pass);
+        //        _context.ActionResult = controller.Login(email,pass);
         //    }
         //}
 

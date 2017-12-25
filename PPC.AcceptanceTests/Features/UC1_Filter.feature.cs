@@ -92,142 +92,142 @@ namespace PPC.AcceptanceTests.Features
                         "PropertyName",
                         "Avarta",
                         "Images",
-                        "PropertyType_ID",
+                        "PropertyType",
                         "Content",
-                        "Street_ID",
-                        "Ward_ID",
-                        "District_ID",
+                        "Street",
+                        "Ward",
+                        "District",
                         "Price",
                         "UnitPrice",
                         "Area",
                         "BedRoom",
                         "BathRoom",
                         "PackingPlace",
-                        "UserID",
+                        "Agency",
                         "Create_at",
                         "Create_post",
-                        "Status_ID",
+                        "Status",
                         "Note",
                         "Update_at",
-                        "Sale_ID"});
+                        "Sale"});
             table1.AddRow(new string[] {
                         "PIS Top Apartment",
                         "PIS_6656-Edit-stamp.jpg",
                         "a17584387317552326.jpg,AvatarNone17100766117552327.png,images1709523917552328.jpg" +
                             ",",
-                        "1",
+                        "Apartment",
                         "The surrounding neighborhood is very much localized with a great number of local " +
                             "shops.",
-                        "748",
-                        "2",
-                        "2",
+                        "Thôn Chúc Đồng",
+                        "Đại Yên",
+                        "Chương Mỹ",
                         "10000",
                         "VND",
                         "120m2",
                         "3",
                         "2",
                         "1",
-                        "1",
+                        "Ly Chau",
                         "2017-11-09",
                         "2017-11-09",
-                        "3",
+                        "Đã duyệt",
                         "Done",
                         "2017-11-23",
-                        "2"});
+                        "Ly Chau"});
             table1.AddRow(new string[] {
                         "ViLa Q7",
-                        "PIS_6656-Edit-stamp.jpg",
-                        "PIS_6656-Edit-stamp.jpg",
-                        "2",
+                        "images172300301.jpg",
+                        "images172300301.jpg",
+                        "Villa",
                         "Brand new apartments with unbelievable river and city view, completely renovated " +
                             "and tastefully furnished.",
-                        "750",
-                        "3",
-                        "2",
+                        "Số 39",
+                        "TT Xuân Mai",
+                        "Chương Mỹ",
                         "70000",
                         "VND",
                         "120m2",
                         "3",
                         "4",
                         "1",
-                        "1",
+                        "Ly Chau",
                         "2017-11-09",
                         "2017-11-09",
-                        "3",
+                        "Đã duyệt",
                         "Done",
                         "2017-11-23",
-                        "2"});
+                        "Ly Chau"});
             table1.AddRow(new string[] {
                         "PIS Serviced Apartment – Style",
                         "sunshine-benthanh-cityhome-10-stamp174228283.jpg",
-                        "PIS_6656-Edit-stamp.jpg",
-                        "1",
+                        "a - Copy17095239.jpg,images (1) - Copy17095242.jpg,images17095242.jpg,",
+                        "Office",
                         "The well equipped kitchen is opened on a cozy living room and a dining area with " +
                             "table and chairs..",
-                        "749",
-                        "4",
-                        "2",
+                        "Thôn Chúc Đồng",
+                        "Đại Yên",
+                        "Chương Mỹ",
                         "30000",
                         "VND",
                         "130m2",
                         "2",
                         "3",
                         "1",
-                        "4",
+                        "Ly Chau",
                         "2017-11-09",
                         "2017-11-09",
-                        "3",
+                        "Đã duyệt",
                         "Done",
                         "2017-11-23",
-                        "3"});
+                        "Ly Chau"});
             table1.AddRow(new string[] {
                         "Vinhomes Central Park L2 – Duong’s Apartment",
                         "PIS_7389-Edit-stamp.jpg",
                         "images1702244617042862.jpg,",
-                        "3",
+                        "Villa",
                         "Vinhomes Central Park is a new development that is in the heart of everything tha" +
                             "t Ho Chi Minh has to offer.",
-                        "752",
-                        "5",
-                        "2",
+                        "Số 39",
+                        "TT Xuân Mai",
+                        "Chương Mỹ",
                         "110000",
                         "VND",
                         "150m2",
                         "4",
                         "2",
                         "1",
-                        "1",
+                        "Ly Chau",
                         "2017-11-09",
                         "2017-11-09",
-                        "3",
+                        "Đã duyệt",
                         "Done",
                         "2017-11-23",
-                        "3"});
+                        "Ly Chau"});
             table1.AddRow(new string[] {
                         "Saigon Pearl Ruby Block",
                         "PIS_7319-Edit-stamp.jpg",
                         "images17423697317334243.jpg,PIS_4622-Edit17463610217334244.jpg,",
-                        "1",
+                        "Apartment",
                         "Studio apartment at central of CBD, nearby Ben Thanh market, Bui Vien Backpacker " +
                             "Area, 23/9 park…",
-                        "755",
-                        "33",
-                        "3",
+                        "Thôn Chúc Đồng",
+                        "Đại Yên",
+                        "Chương Mỹ",
                         "30000",
                         "VND",
                         "130m2",
                         "3",
                         "5",
                         "1",
-                        "4",
+                        "Ly Chau",
                         "2017-11-09",
                         "2017-11-09",
-                        "3",
+                        "Đã duyệt",
                         "Done",
                         "2017-11-23",
-                        "2"});
+                        "Ly Chau"});
 #line 8
- testRunner.Given("the following project:", ((string)(null)), table1, "Given ");
+ testRunner.Given("the following project", ((string)(null)), table1, "Given ");
 #line hidden
         }
         
@@ -243,7 +243,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 7
 this.FeatureBackground();
 #line 17
- testRunner.When("I search for projects by the phrase \'PIS\',\'1\',\'3\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I search for projects by the phrase \'PIS\',\'Apartment\',\'Chương Mỹ\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 18
  testRunner.Then("project should display project with projectname follow \'PIS Top Apartment\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

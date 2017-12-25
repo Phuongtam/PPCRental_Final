@@ -11,7 +11,7 @@ using PPC.Models;
 
 namespace PPC.AcceptanceTests.StepDefinitions
 {
-    [Binding]
+    
     class ViewListOfProjectSteps
     {
         IWebDriver driver;

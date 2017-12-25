@@ -11,21 +11,26 @@ namespace PPC.AcceptanceTests.StepDefinitions
     [Binding, Scope(Tag = "automated")]
     public class ProjectFilterSteps
     {
-     
+
         private readonly SearchDriver _searchDriver;
+        DemoPPCRentalEntities db = new DemoPPCRentalEntities();
+
         public ProjectFilterSteps(SearchDriver driver)
         {
             _searchDriver = driver;
+
         }
-
-
-      
         [When(@"I search for projects by the phrase '(.*)','(.*)','(.*)'")]
-        public void WhenISearchForProjectsByThePhrase(string p0, int p1, int p2)
+        public void WhenISearchForProjectsByThePhrase(string p0, string p1, string p2)
         {
 
-            _searchDriver.Search(p0,p1,p2);
+            int type_ID = db.PROPERTY_TYPE.ToList().FirstOrDefault(x => x.CodeType == p1).ID;
+            int Dis_ID = db.DISTRICT.ToList().FirstOrDefault(x => x.DistrictName == p2).ID;
+            _searchDriver.Search(p0, type_ID, Dis_ID);
         }
+
+
+
 
         [Then(@"project should display project with projectname follow '(.*)'")]
         public void ThenProjectShouldDisplayProjectWithProjectnameFollow(string expectedTitles)
@@ -33,7 +38,7 @@ namespace PPC.AcceptanceTests.StepDefinitions
             _searchDriver.ShowProperty(expectedTitles);
         }
 
-        
+
 
 
     }

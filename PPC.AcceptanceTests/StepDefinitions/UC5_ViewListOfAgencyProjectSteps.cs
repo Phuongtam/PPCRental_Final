@@ -10,7 +10,7 @@ using PPC.Models;
 
 namespace PPC.AcceptanceTests.StepDefinitions
 {
-    [Binding]
+   
     public sealed class UC5_ViewListOfAgencyProjectSteps
     {
         IWebDriver driver;

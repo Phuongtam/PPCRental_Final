@@ -17,10 +17,12 @@ namespace PPC.AcceptanceTests.StepDefinitions
             _projectDriver = driver;
         }
 
-        [Given(@"the following project:")]
+        
+        [Given(@"the following project")]
         public void GivenTheFollowingProject(Table givenProjects)
         {
             _projectDriver.InsertProjecttoDB(givenProjects);
         }
+
     }
 }

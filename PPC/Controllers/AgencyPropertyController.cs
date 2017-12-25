@@ -62,6 +62,27 @@ namespace PPC.Controllers
 
         }
 
+        public ActionResult ViewPostedProject()
+        {
+            if (Session["UserID"] != null)
+            {
+                var id = Session["UserID"];
+                var user = db.USER.Find(id);
+                var userid = user.ID;
+
+                var id2 = Session["Status_ID"];
+                var project = db.PROJECT_STATUS.Find(id2 = 3);
+                var projectid = project.ID;
+                var product = db.PROPERTY.Where(d => d.Status_ID == projectid && d.UserID == userid).ToList();
+                return View(product);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
+
+        }
+
         [HttpGet]
         public ActionResult CreateNewProperty()
         {
@@ -160,6 +181,44 @@ namespace PPC.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult DraftPOST(PROPERTY property)
+        {
+            if (Session["UserID"] != null)
+            {
+
+                property.Avatar = AvatarUPost(property);
+                property.Images = ImagesUPost(property);
+                property.Created_at = DateTime.Now;
+                property.Create_post = DateTime.Now;
+                property.UnitPrice = "VND";
+                property.Status_ID = 2;
+                property.UserID = int.Parse(Session["UserID"].ToString());
+
+                if (ModelState.IsValid)
+                {
+                    db.PROPERTY.Add(property);
+                    db.SaveChanges();
+                    return RedirectToAction("ViewDraftProject", "AgencyProperty");
+                }
+
+                ViewBag.District_ID = new SelectList(db.DISTRICT, "ID", "DistrictName", property.District_ID);
+                ViewBag.Status_ID = new SelectList(db.PROJECT_STATUS, "ID", "Status_Name", property.Status_ID);
+                ViewBag.PropertyType_ID = new SelectList(db.PROPERTY_TYPE, "ID", "CodeType", property.PropertyType_ID);
+                ViewBag.Street_ID = new SelectList(db.STREET, "ID", "StreetName", property.Street_ID);
+                ViewBag.UserID = new SelectList(db.USER, "ID", "Email", property.UserID);
+                ViewBag.Sale_ID = new SelectList(db.USER, "ID", "Email", property.Sale_ID);
+                ViewBag.Ward_ID = new SelectList(db.WARD, "ID", "WardName", property.Ward_ID);
+                return View(property);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
+        }
+
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -204,63 +263,7 @@ namespace PPC.Controllers
             db.SaveChanges();
             return RedirectToAction("ViewListMyProject", "AgencyProperty");
         }
-        [HttpPost]
-        [ValidateInput(false)]
-        public ActionResult DraftPOST(PROPERTY p)
-        {
-            PROPERTY en = new PROPERTY();
-            string s;
-            string b;
-            try
-            {
-                AvatarU(p, out en, out s);
-                ImagesU(p, out en, out b);
-
-                en.PROPERTY_TYPE = p.PROPERTY_TYPE;
-                en.PropertyName = p.PropertyName;
-                en.Avatar = s;
-                en.Images = b;
-                en.PropertyType_ID = p.PropertyType_ID;
-                en.Content = p.Content;
-                en.Street_ID = p.Street_ID;
-                en.Ward_ID = p.Ward_ID;
-                en.District_ID = p.District_ID;
-                en.Price = p.Price;
-                en.UnitPrice = "VND";
-                en.Area = p.Area;
-                en.BedRoom = p.BedRoom;
-                en.BathRoom = p.BathRoom;
-                en.PackingPlace = p.PackingPlace;
-                en.Status_ID = 1;
-                en.Updated_at = DateTime.Now;
-                en.Note = p.Note;
-                db.SaveChanges();
-                return RedirectToAction("ViewListMyProject", "AgencyProperty");
-            }
-            catch (NullReferenceException)
-            {
-                en = new PROPERTY();
-
-                en.PROPERTY_TYPE = p.PROPERTY_TYPE;
-                en.PropertyName = p.PropertyName;
-                en.PropertyType_ID = p.PropertyType_ID;
-                en.Content = p.Content;
-                en.Street_ID = p.Street_ID;
-                en.Ward_ID = p.Ward_ID;
-                en.District_ID = p.District_ID;
-                en.Price = p.Price;
-                en.UnitPrice = "VND";
-                en.Area = p.Area;
-                en.BedRoom = p.BedRoom;
-                en.BathRoom = p.BathRoom;
-                en.PackingPlace = p.PackingPlace;
-                en.Status_ID = 1;
-                en.Updated_at = DateTime.Now;
-                en.Note = p.Note;
-                db.SaveChanges();
-                return RedirectToAction("ViewListMyProject", "AgencyProperty");
-            }
-        }
+       
 
         private string ImagesU(PROPERTY p)
         {

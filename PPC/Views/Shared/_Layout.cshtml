@@ -64,27 +64,32 @@
                 </ul>
 
 
-                <ul class="nav navbar-nav navbar-right" style="margin-top:15px;margin-right:75px"></ul>
-                <div class="navbar-right" style="margin-right:50px;margin-top:15px">
-                    @if (Session["userID"] != null)
-                    {
-                        @*@Html.Partial("_LoginPartial")*@
+                <ul class="nav navbar-nav navbar-right" style="margin-top:15px;margin-right:75px">
+                @if (Session["UserID"] == null)
+                {
+                  <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                  <li>@Html.ActionLink("Register", "Login", "Account")</li>
 
-                        <a href="#" id="hello">Xin chao @Session["Fullname"]</a>
-                        <a href="/Account/Logout/">Logout</a>
+                }
+                else
+                {
+                                <li class="active">
+                                    <a class="nav-link" href="#">
+                                        <i class="fa fa-fw fa-dash"></i>
+                                        <span class="username">Hi! @Session["FullName"]</span>
+                                    </a>
+                                </li>
 
-                    }
-                    else
-                    {
+                                <li class="active">
+                                    <a class="nav-link" href="~/Account/Logout">
+                                        <i class="fa fa-fw fa-dash"></i>
+                                        <span class="username">Logout</span>
 
-                        <a href="/Account/Register" id="registerLink">Register</a>
-                        <a href="/Account/Login" id="loginLink">Log in</a>
+                                    </a>
+                                </li>
+                }
+                </ul>
 
-                        @*<a href="/Employee/Logout/@Session["userID"]">Logout</a>*@
-
-
-                    }
-                </div>
             </div>
         </div>
     </div>

@@ -42,24 +42,26 @@
                         </a>
                     </li>
                     <li>
-                        <a href="./user.html">
-                            <i class="material-icons">person</i>
-                            <p>List Personal Project</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="./table.html">
+                        <a href="~/Admin/ProjectAdmin/ViewListProjectUnapproved">
                             <i class="material-icons">content_paste</i>
-                            <p>List all Project</p>
+                            <p>UnApproached/Expired</p>
                         </a>
                     </li>
                     <li>
-                        <a href="./typography.html">
+                        <a href="~/Admin/ProjectAdmin/ViewListPersonalProject">
+                            <i class="material-icons">person</i>
+                            <p>My Projects</p>
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="~/Admin/ProjectAdmin/Create">
                             <i class="material-icons">library_books</i>
-                            <p>Typography</p>
+                            <p>Create</p>
                         </a>
                     </li>
-                    <li>
+                    @*<li>
                         <a href="./icons.html">
                             <i class="material-icons">bubble_chart</i>
                             <p>Icons</p>
@@ -76,13 +78,13 @@
                             <i class="material-icons text-gray">notifications</i>
                             <p>Notifications</p>
                         </a>
-                    </li>
-                    @*<li class="active-pro">
-                        <a href="upgrade.html">
-                            <i class="material-icons">unarchive</i>
-                            <p>Upgrade to PRO</p>
-                        </a>
                     </li>*@
+                    @*<li class="active-pro">
+            <a href="upgrade.html">
+                <i class="material-icons">unarchive</i>
+                <p>Upgrade to PRO</p>
+            </a>
+        </li>*@
                 </ul>
             </div>
         </div>
@@ -96,16 +98,16 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        
+
                     </div>
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             @*<li>
-                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="material-icons">dashboard</i>
-                                    <p class="hidden-lg hidden-md">Dashboard</p>
-                                </a>
-                            </li>*@
+                                    <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="material-icons">dashboard</i>
+                                        <p class="hidden-lg hidden-md">Dashboard</p>
+                                    </a>
+                                </li>*@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="material-icons">notifications</i>
@@ -135,11 +137,12 @@
                                     @*<a href="#" id="hello">Xin chao @Session["Fullname"]*@
                                     <i class="material-icons">person</i>
                                     <p class="hidden-lg hidden-md">Profile</p>
-                                    @Session["Fullname"]</a>
-                                
+                                    @Session["Fullname"]
+                                </a>
+
                             </li>
                             <li>
-                                
+
                                 <a href="/Account/Logout/">Logout</a>
                             </li>
                         </ul>
@@ -157,7 +160,7 @@
                 </div>
             </nav>
             @RenderBody()
-            
+
         </div>
     </div>
     <!--   Core JS Files   -->
@@ -178,11 +181,15 @@
     <script src="~/Content/Admincss/material-dashboard.js?v=1.2.0"></script>
     <!-- Material Dashboard DEMO methods, don't include it in your project! -->
     <script src="~/Content/Admincss/js/demo.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript"></script>
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+    @RenderSection("jsFooter", required: false)
+
     $(document).ready(function() {
 
-        // Javascript method's body can be found in assets/js/demos.js
-        demo.initDashboardPageCharts();
+    // Javascript method's body can be found in assets/js/demos.js
+    demo.initDashboardPageCharts();
 
     });
     </script>

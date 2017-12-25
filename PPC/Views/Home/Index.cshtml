@@ -152,13 +152,25 @@
                     <p>District : @item.DISTRICT.DistrictName</p>
                     <p>Street : @item.STREET.StreetName</p>
 
-                    <p>@item.Content.Substring(0, 10) ...</p>
+                    @*<p>@item.Content.Substring(0, 10) ...</p>*@
+                    <p>@item.PROPERTY_TYPE.Description</p>
+                        @{
+                            if (item.Content != null && item.Content.Length >= 100)
+                            {
+                                <span>@item.Content.Substring(0, 100)...</span>
+                            }
+                            else
+                            {
+                                <span>@item.Content</span>
+                            }
+                        }
+                        <p>
                     <br />
                     <p>
                         <b>&nbsp;<img src="~/Images/dollar-coin-money.png" /> &nbsp;&nbsp;@item.Price&nbsp;@item.UnitPrice &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="~/Images/chart-area.png" /> &nbsp;&nbsp;@item.Area</b><br />
                         <br />
                     </p>
-                    <p><a href="~/Property/Detail/@item.ID" id="btn-@item.ID" class="btn btn-primary btn-block" role="button">Detail</a></p>
+                    <p><a href="~/Property/Details/@item.ID" id="btn-@item.ID" class="btn btn-primary btn-block" role="button">Detail</a></p>
                 </div>
             </div>
         </div>

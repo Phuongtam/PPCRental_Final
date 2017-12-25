@@ -7,12 +7,12 @@
 
 <h2>EditStatus</h2>
 
-@using (Html.BeginForm("EditStatus", "ProjectAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("EditStatus", "ProjectAdmin", FormMethod.Post, new { id = "pform", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>PROPERTY</h4>
+        <h4>@Model.PropertyName</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
@@ -54,14 +54,22 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
+                <button id="back" class="btn btn-secondary">Back</button>
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "ViewListProjectUnapproved")
-</div>
+@section jsFooter{
+    <script>
+                $('#back').click(function (e) {
+                    e.preventDefault();
+                    var form = $('#pform');
+                    form.attr('action', 'ViewListofAgencyProject');
+                    form.submit();
+                });
 
+    </script>
+}
 

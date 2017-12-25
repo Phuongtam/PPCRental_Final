@@ -14,10 +14,8 @@ namespace PPC.Controllers
         public ActionResult Index()
         {
 
-            var id = Session["Status_ID"];
-            var project = db.PROJECT_STATUS.Find(id = 3);
-            var projectid = project.ID;
-            var product = db.PROPERTY.Where(d => d.Status_ID == projectid).ToList();
+           
+            var product = db.PROPERTY.Where(d => d.Status_ID == 3).ToList();
             return View(product);
 
         }

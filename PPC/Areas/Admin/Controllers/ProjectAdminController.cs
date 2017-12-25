@@ -31,6 +31,26 @@ namespace PPC.Areas.Admin.Controllers
         {
             if (Session["UserID"] != null)
             {
+                if(Session["UserRole"].ToString() == "1" || Session["UserRole"].ToString() == "0")
+                {
+                    var r = db.USER.Where(x => x.Role != 0 && x.Role != 1);
+                    var p = db.PROPERTY.Where(x => x.Status_ID != 3 && (x.USER.Role != 0 && x.USER.Role != 1)).ToList();
+                    return View(p);
+                }
+                return RedirectToAction("Login", "Account", new { area = "" });
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
+
+        }
+
+        public ActionResult ViewListPersonalProject()
+        {
+            if (Session["UserID"] != null)
+            {
                 var id = Session["UserID"];
                 var user = db.USER.Find(id);
                 var userid = user.ID;
@@ -43,19 +63,7 @@ namespace PPC.Areas.Admin.Controllers
             }
 
         }
-        public ActionResult ViewListofProject()
-        {
-            if (Session["UserID"] != null)
-            {
-                var product = db.PROPERTY.ToList();
-                return View(product);
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account", new { area = "" });
-            }
 
-        }
         //get viewlistprojectupapproved
         public ActionResult ViewListProjectUnapproved()
         {
@@ -130,7 +138,7 @@ namespace PPC.Areas.Admin.Controllers
                 project.PackingPlace = p.PackingPlace;
                 db.Entry(project).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("ViewListofProject", "ProjectAdmin");
+                return RedirectToAction("ViewListofAgencyProject", "ProjectAdmin");
             }
             ViewBag.PropertyType_ID = new SelectList(db.PROPERTY_TYPE, "ID", "CodeType");
             ViewBag.Ward_ID = new SelectList(db.WARD.Where(y => y.ID >= 31 && y.ID <= 54), "ID", "WardName");
@@ -149,7 +157,7 @@ namespace PPC.Areas.Admin.Controllers
             ViewBag.district = db.DISTRICT.OrderByDescending(x => x.ID).Where(y => y.ID >= 31 && y.ID <= 54).ToList();
             ViewBag.ward = db.WARD.OrderByDescending(x => x.ID).Where(y => y.District_ID >= 31 && y.District_ID <= 54).ToList();
             ViewBag.street = db.STREET.OrderByDescending(x => x.ID).Where(y => y.District_ID >= 31 && y.District_ID <= 54).ToList();
-            ViewBag.status = db.PROJECT_STATUS.OrderByDescending(x => x.ID).ToList();
+            ViewBag.Status_ID = db.PROJECT_STATUS.OrderByDescending(x => x.ID).ToList();
             ViewBag.sale = db.USER.OrderByDescending(x => x.ID).ToList();
             return View(project);
         }
@@ -157,6 +165,64 @@ namespace PPC.Areas.Admin.Controllers
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Edit(int id, PROPERTY p)
+        {
+            //PROPERTY product;
+            PROPERTY en;
+            string s;
+            string b;
+            AvatarU(p, out en, out s);
+            ImagesU(p, out en, out b);
+            if (ModelState.IsValid)
+            {
+
+                en.PROPERTY_TYPE = p.PROPERTY_TYPE;
+                en.PropertyName = p.PropertyName;
+                en.Avatar = s;
+                en.Images = b;
+                en.PropertyType_ID = p.PropertyType_ID;
+                en.Content = p.Content;
+                en.Street_ID = p.Street_ID;
+                en.Ward_ID = p.Ward_ID;
+                en.District_ID = p.District_ID;
+                en.Price = p.Price;
+                en.UnitPrice = p.UnitPrice;
+                en.Area = p.Area;
+                en.BedRoom = p.BedRoom;
+                en.BathRoom = p.BathRoom;
+                en.PackingPlace = p.PackingPlace;
+                en.Updated_at = DateTime.Now;
+
+                en.Status_ID = p.Status_ID;
+
+
+                db.Entry(en).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ViewListofAgencyProject", "ProjectAdmin");
+            }
+            ViewBag.property_type = db.PROPERTY_TYPE.OrderByDescending(x => x.ID).ToList();
+            ViewBag.district = db.DISTRICT.OrderByDescending(x => x.ID).Where(y => y.ID >= 31 && y.ID <= 54).ToList();
+            ViewBag.ward = db.WARD.OrderByDescending(x => x.ID).Where(y => y.District_ID >= 31 && y.District_ID <= 54).ToList();
+            ViewBag.street = db.STREET.OrderByDescending(x => x.ID).Where(y => y.District_ID >= 31 && y.District_ID <= 54).ToList();
+            ViewBag.Status_ID = db.PROJECT_STATUS.OrderByDescending(x => x.ID).ToList();
+            ViewBag.sale = db.USER.OrderByDescending(x => x.ID).ToList();
+            return View(p);
+        }
+        [HttpGet]
+        public ActionResult EditMe(int id)
+        {
+            var project = db.PROPERTY.FirstOrDefault(x => x.ID == id);
+            ViewBag.property_type = db.PROPERTY_TYPE.OrderByDescending(x => x.ID).ToList();
+            ViewBag.district = db.DISTRICT.OrderByDescending(x => x.ID).Where(y => y.ID >= 31 && y.ID <= 54).ToList();
+            ViewBag.ward = db.WARD.OrderByDescending(x => x.ID).Where(y => y.District_ID >= 31 && y.District_ID <= 54).ToList();
+            ViewBag.street = db.STREET.OrderByDescending(x => x.ID).Where(y => y.District_ID >= 31 && y.District_ID <= 54).ToList();
+            ViewBag.status = db.PROJECT_STATUS.OrderByDescending(x => x.ID).ToList();
+            ViewBag.sale = db.USER.OrderByDescending(x => x.ID).ToList();
+            return View(project);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult EditMe(int id, PROPERTY p)
         {
             //PROPERTY product;
             PROPERTY en;
@@ -186,7 +252,6 @@ namespace PPC.Areas.Admin.Controllers
             return RedirectToAction("Index");
 
         }
-
 
         private void AvatarU(PROPERTY p, out PROPERTY product, out string s)
         {
@@ -403,28 +468,28 @@ namespace PPC.Areas.Admin.Controllers
         }
 
 
-        public JsonResult GetStreet(int did)
-        {
-            var db = new DemoPPCRentalEntities();
-            var ward = db.STREET.Where(s => s.District_ID == did);
-            return Json(ward.Select(s => new
-            {
-                id = s.ID,
-                text = s.StreetName
-            }), JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult GetWard(int did)
-        {
-            var db = new DemoPPCRentalEntities();
-            var ward = db.WARD.Where(s => s.District_ID == did);
-            return Json(ward.Select(s => new
-            {
-                id = s.ID,
-                text = s.WardName
-            }), JsonRequestBehavior.AllowGet);
+        //public JsonResult GetStreet(int did)
+        //{
+        //    var db = new DemoPPCRentalEntities();
+        //    var ward = db.STREET.Where(s => s.District_ID == did);
+        //    return Json(ward.Select(s => new
+        //    {
+        //        id = s.ID,
+        //        text = s.StreetName
+        //    }), JsonRequestBehavior.AllowGet);
+        //}
+        //public JsonResult GetWard(int did)
+        //{
+        //    var db = new DemoPPCRentalEntities();
+        //    var ward = db.WARD.Where(s => s.District_ID == did);
+        //    return Json(ward.Select(s => new
+        //    {
+        //        id = s.ID,
+        //        text = s.WardName
+        //    }), JsonRequestBehavior.AllowGet);
 
 
-        }
+        //}
 
         public ActionResult Delete(int? id)
         {
@@ -445,7 +510,7 @@ namespace PPC.Areas.Admin.Controllers
             PROPERTY property = db.PROPERTY.Find(id);
             db.PROPERTY.Remove(property);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ViewListofAgencyProject");
         }
     }
 

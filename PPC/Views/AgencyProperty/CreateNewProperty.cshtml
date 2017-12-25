@@ -18,14 +18,9 @@
                         <a href=""><h4 class="title">Create Property</h4></a>
                         @*<p class="category">Here is a subtitle for this table</p>*@
                     </div>
+
+
                     <div class="card-content table-responsive">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.PropertyName, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.PropertyName, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.PropertyName, "", new { @class = "text-danger" }, "requried")
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Avatar, new { @class = "control-label col-md-2" })
@@ -36,12 +31,23 @@
                         </div>
 
                         <div class="form-group">
+                            @Html.LabelFor(model => model.PropertyName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.PropertyName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PropertyName, "", new { @class = "text-danger" }, "requried")
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
                             @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 <input class="form-control" type="file" name="UpImages" accept="image/*" multiple />
                                 @Html.ValidationMessageFor(model => model.Images)
                             </div>
                         </div>
+
                         <div class="form-group">
                             @Html.LabelFor(model => model.PropertyType_ID, "PropertyType", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -57,7 +63,7 @@
                             </div>
                         </div>
 
-                       
+
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.District_ID, "District", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -113,13 +119,14 @@
                                 @Html.ValidationMessageFor(model => model.PackingPlace, "", new { @class = "text-danger" })
                             </div>
                         </div>
+
                         @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.DisplayFor(model => model.Content)
                             @Html.TextAreaFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" }, id = "txtContent" })
                             @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
                         </div>
-                   </div>
+
+                    </div>
                 </div>
             </div>
 
@@ -128,38 +135,35 @@
    
     <div class="form-group ">
         <div class="col-md-offset-2 col-md-10" style="margin-left:70%">
+            <button id="back" class="btn btn-secondary">Back</button>
             <button id="draf" class="btn btn-secondary">Draft</button>
             <input type="submit" value="Post" class="btn btn-primary " />
         </div>
-    </div>
-}
-<div>
-    @Html.ActionLink("Back to List", "ViewListMyProject")
-</div>
+        </div>
+        }
 
-@*@section jsFooter{
-    <script>
-        $('#btnSelectImage').on('click', function (e) {
-            e.preventDefault();
-            var finder = new CKFinder();
-            finder.selectActionFunction = function (url) {
-                $('#txtImage').val(url);
-            };
-            finder.popup();
-        })
+        @section jsFooter{
+            <script>
 
-        var editor = CKEDITOR.replace('txtContent', {
-            customConfig: '~/Scripts/ckeditor/config.js',
+                var editor = CKEDITOR.replace('txtContent', {
+                    customConfig: '~/Scripts/ckeditor/config.js',
 
-        });
+                });
 
 
-        $('#draf').click(function (e) {
-            e.preventDefault();
-            var form = $('#pform');
-            form.attr('action', 'Draft');
-            form.submit();
-        });
+                $('#draf').click(function (e) {
+                    e.preventDefault();
+                    var form = $('#pform');
+                    form.attr('action', 'Draft');
+                    form.submit();
+                });
 
-    </script>
-}*@
+                $('#back').click(function (e) {
+                    e.preventDefault();
+                    var form = $('#pform');
+                    form.attr('action', 'ViewListMyProject');
+                    form.submit();
+                });
+
+            </script>
+        }

@@ -1,29 +1,27 @@
 ﻿@model IEnumerable<PPC.Models.PROPERTY>
-@using PPC.Models;
+
 @{
-    ViewBag.Title = "ViewListofProject";
+    ViewBag.Title = "ViewListPersonalProject";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
-    var db = new DemoPPCRentalEntities();
 }
+
+<h2>ViewListPersonalProject</h2>
 
 <div class="col-md-12">
     <p>
-        <br >
         <br>
-   
-        @Html.ActionLink("Create New", "Create", FormMethod.Post, new { enctype = "multipart/form-data" })
+        <br>
+
+        @Html.ActionLink(" Create New", "Create")
 
     </p>
 </div>
-
-
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header" data-background-color="blue">
-                    <a href=""><h4 class="title">List Of Project</h4></a>
+                    <a href=""><h4 class="title">My Projects</h4></a>
                     @*<p class="category">Here is a subtitle for this table</p>*@
                 </div>
                 <div class="card-content table-responsive">
@@ -32,6 +30,7 @@
                             <tr>
                                 <th></th>
                                 <th><b>Property Name</b></th>
+                                <th><b>Avatar</b></th>
                                 <th><b>Property Type</b></th>
                                 <th><b>District</b></th>
                                 <th><b>Price</b></th>
@@ -46,8 +45,7 @@
                                 <tr>
                                     <td>
 
-                                        <a href="~/Admin/ProjectAdmin/Edit/@item.ID" title="Edit"><img src="~/Images/edit.png" width="20" /></a><br />
-                                        <a href="~/Admin/ProjectAdmin/Details/@item.ID" title="Details"><img src="~/Images/if_More_2001881.png" width="20" /></a><br />
+                                        <a href="~/Admin/ProjectAdmin/EditMe/@item.ID" title="Edit"><img src="~/Images/edit.png" width="20" /></a><br />
                                         <a href="~/Admin/ProjectAdmin/Delete/@item.ID" title="Delete"><img src="~/Images/if_delete_16_22536.png" width="20" /></a>
                                         @*<a href="~/Admin/ProjectAdmin/EditStatus/@item.ID" title="Edit"><img src="~/Images/edit.png" width="10" /></a><br />*@
 
@@ -59,6 +57,9 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.PropertyName)
                                     </td>
+                                    <td>
+                                            <img src="~/Images/@item.Avatar" width="100px" />
+                                        </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.PROPERTY_TYPE.CodeType)
                                         @*<p>@item.PROPERTY_TYPE.CodeType</p>*@
@@ -76,15 +77,15 @@
                                     </td>
 
 
-                                    
+
                                     <td>
                                         @*@Html.DisplayFor(modelItem => item.PROJECT_STATUS.Status_Name)*@
-                                        @*<p>@item.PROJECT_STATUS.Status_Name</p>*@
-                                        @Html.DropDownList("Status_ID", new SelectList(db.PROJECT_STATUS, "ID", "Status_Name"), new { @class = "form-control" })
+                                        @Html.DisplayFor(modelItem => item.PROJECT_STATUS.Status_Name)
+                                        @*@Html.DropDownList("Status_ID", new SelectList(db.PROJECT_STATUS, "ID", "Status_Name"), new { @class = "form-control" })*@
 
 
                                     </td>
-                                    
+
 
                                     <td>
 
@@ -98,10 +99,6 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 </div>
-
-
-
-

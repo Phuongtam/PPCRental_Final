@@ -1437,7 +1437,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Property\Detail.cshtml" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -1451,6 +1450,7 @@
     <Content Include="Views\AgencyProperty\ViewDraftProject.cshtml" />
     <Content Include="Views\AgencyProperty\ViewListMyProject.cshtml" />
     <Content Include="Views\AgencyProperty\ViewPostedProject.cshtml" />
+    <Content Include="Views\Property\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -146,7 +146,7 @@
                 <img src="~/Images/@item.Avatar" alt="@item.PropertyName">
                 <div class="caption">
                     <div class="name">
-                        <b><a href="~/Property/Detail/@item.ID">@item.PropertyName</a></b>
+                        <b><a href="~/Property/Details/@item.ID">@item.PropertyName</a></b>
                     </div>
                     <p>@item.PROPERTY_TYPE.CodeType</p>
                     <p>District : @item.DISTRICT.DistrictName</p>
@@ -155,9 +155,9 @@
                     @*<p>@item.Content.Substring(0, 10) ...</p>*@
                     <p>@item.PROPERTY_TYPE.Description</p>
                         @{
-                            if (item.Content != null && item.Content.Length >= 100)
+                            if (item.Content != null && item.Content.Length >= 60)
                             {
-                                <span>@item.Content.Substring(0, 100)...</span>
+                                <span>@item.Content.Substring(0, 60)...</span>
                             }
                             else
                             {
